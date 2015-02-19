@@ -1,0 +1,135 @@
+<!-- canvas stuff -->
+<style>
+canvas {
+position: fixed; 
+border: 1px solid black;
+/*background: white; */
+top: 0px;
+left: 0px;
+}
+#console {
+position: fixed; 
+top: 0%; 
+/*index: 100;*/
+border: 1px dashed black
+}
+.control {
+position: fixed; 
+top: -10%; 
+index: 100;
+border: 1px dashed black
+}
+.control:hover {
+//background: yellow; 
+top: 0%; 
+//height: 100%
+}
+.swiper {
+border: 1px solid black; 
+position: fixed; 
+height: 50px; 
+width: 20%; 
+background: red; 
+}
+.swiper:hover {
+background: rgba(0, 0, 0, 0.1); 
+width: 50%; 
+height: 100%; 
+/*top: 0%*/
+}
+.swiper:before {
+font-family: Helvetica; 
+content: attr(info); 
+white-space: pre; /* or pre-wrap */
+}
+.top {
+top: 0px; 
+}
+.right {
+right: 0px; 
+}
+.left {
+left: 0px; 
+}
+</style>
+<!-- canvas resizing -->
+<canvas id="mask" style="display: none"></canvas>
+<canvas id="paper"></canvas>
+<div id="console">
+<textarea id="status" style="width:100%; height: 15%"></textarea>
+<textarea id="data" style="width:100%; height: 5%"></textarea>
+<button id="submit_data">submit</button>
+</div>
+<div class="control">
+<div class="swiper top right" id="zoom" info="forward/strafe"></div>
+<div class="swiper top left" id="angle"></div>
+</div>
+
+<script src="3d.js"></script>
+
+
+<script>
+
+// test it; 
+var camera = {
+'pupilCoord': [0, 70, 0], 
+'direction': [0, -200, 0] /* direction camera points. Length of vector is 'depth' i.e. distance from pupil to retina */
+}
+var axes = axes || getAxes(40); 
+var scene = [
+]; 
+//scene = scene.concat(randomSpheres); 
+//scene = scene.concat(randomPath); 
+scene = scene.concat(axes); 
+scene = scene.concat(cone); 
+scene = scene.concat(tube); 
+//scene = scene.concat(distribution); 
+alert('scene = ' + JSON.stringify(scene)); 
+//ctx.scene(camera, scene); 
+
+function image3d(getDataBool){
+try{
+var im = Image.create({
+'id': 'image', 
+}); 
+var text = '�'; 
+var height = 20; 
+var ctx = im.ctx; 
+ctx.font = height + 'px Helvetica bold'; 
+
+im.width = ctx.measureText(text).width;
+im.height = height; 
+ctx.font = height + 'px Helvetica bold'; 
+ctx.fillStyle = "blue"; 
+ctx.fillText(text, 0, height);
+im.show(); 
+
+var imageData = ctx.getImageData(0, 0, im.width, im.height).data; 
+var pixels = []; 
+var arrayData = []; 
+var numPixels = im.width*im.height; 
+var step = 1; 
+for (var j=0; j<im.height; j+=step){
+var row = []; 
+for (var i=0; i<im.width; i+=step){
+var dataIndex = 4*(i + im.width*j); 
+var r = imageData[dataIndex], g = imageData[dataIndex + 1], b = imageData[dataIndex +2], a = imageData[dataIndex + 3], rgba = [r, g, b, a];
+var intensity = 10*(1 - (r + g + b)/(255*3)); 
+var pixel = {'className': 'pixel3d', 'coord': [i, im.height - j, intensity], 'size': 1.5*step, 'rgba': rgba}; 
+pixels.push(pixel);
+row.push([i, im.height - j, intensity]); 
+}
+arrayData.push(row); 
+}
+var arrayDataJSON = JSON.stringify(arrayData); 
+data.value = arrayDataJSON; 
+return pixels; 
+
+}catch(e){alert(e)}
+}
+
+var pixels = image3d(); 
+//alert(JSON.stringify(pixels)); 
+
+//scene = scene.concat(pixels); 
+</script>
