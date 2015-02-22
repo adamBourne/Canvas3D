@@ -639,14 +639,14 @@ return coords2d;
 
 // user interface -->
 
-var stat = document.getElementById("status"); 
+//var stat = document.getElementById("status"); 
 var TWOPI = 2*Math.PI; 
 function drawScene(){
 paper.fit(); 
 mask.fit(); 
 ctx.scene(camera, scene); 
 camera.d = camera.direction.mod(); 
-stat.innerHTML = 'camera = ' + JSON.stringify(camera); 
+//stat.innerHTML = 'camera = ' + JSON.stringify(camera); 
 }
 
 function touchStart(ev){
@@ -744,16 +744,16 @@ shape && shape.touchend && shape.touchend();
 makeSlider(paper); // enable paper interactivity; 
 // console interactivity; 
 var data = document.getElementById("data"); 
-var data_obj, quads; 
+//var data_obj, quads; 
 
-var submit_data = document.getElementById("submit_data"); 
-function submitData(){
-data_obj = JSON.parse(data.value); 
-quads = linesToQuads(data_obj); 
-alert("quads = " + quads); 
-}; 
+//var submit_data = document.getElementById("submit_data"); 
+//function submitData(){
+//data_obj = JSON.parse(data.value); 
+//quads = linesToQuads(data_obj); 
+//alert("quads = " + quads); 
+//}; 
 
-submit_data.onclick = submitData; 
+//submit_data.onclick = submitData; 
 function linesToQuads (lines){ // turns lines = [line1=[point11, point12...], line2=[point21, point22, ...], ...] to quadrilaterals = [quad1=[vertex11, vertex12, vertex13, vertex14], quad2, ...]; 
 var quadrilaterals = []; 
 for (var lineIndex = 0; lineIndex < lines.length - 1; lineIndex ++){

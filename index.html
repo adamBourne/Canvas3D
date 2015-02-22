@@ -1,3 +1,26 @@
+<!DOCTYPE HTML>
+<!--
+    wriddo3d: renders 3D shapes on canvas with cameras and individual touch/mouse events
+    Copyright (C) 2015  Adam Bourne
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	
+	Contact details: 
+		email: a.b@post.com
+		paper mail: Dr. A. Bourne, Flat 46 Landseer House, Francis Chichester Way, Battersea, London, SW11 5HY, UK.
+-->
+
 <!-- canvas stuff -->
 <style>
 canvas {
@@ -55,11 +78,7 @@ left: 0px;
 <!-- canvas resizing -->
 <canvas id="mask" style="display: none"></canvas>
 <canvas id="paper"></canvas>
-<div id="console">
-<textarea id="status" style="width:100%; height: 15%"></textarea>
-<textarea id="data" style="width:100%; height: 5%"></textarea>
-<button id="submit_data">submit</button>
-</div>
+
 <div class="control">
 <div class="swiper top right" id="zoom" info="forward/strafe"></div>
 <div class="swiper top left" id="angle"></div>
@@ -87,48 +106,48 @@ scene = scene.concat(tube);
 alert('scene = ' + JSON.stringify(scene)); 
 //ctx.scene(camera, scene); 
 
-function image3d(getDataBool){
-try{
-var im = Image.create({
-'id': 'image', 
-}); 
-var text = '�'; 
-var height = 20; 
-var ctx = im.ctx; 
-ctx.font = height + 'px Helvetica bold'; 
+//function image3d(getDataBool){
+//try{
+//var im = Image.create({
+//'id': 'image', 
+//}); 
+//var text = '�'; 
+//var height = 20; 
+//var ctx = im.ctx; 
+//ctx.font = height + 'px Helvetica bold'; 
 
-im.width = ctx.measureText(text).width;
-im.height = height; 
-ctx.font = height + 'px Helvetica bold'; 
-ctx.fillStyle = "blue"; 
-ctx.fillText(text, 0, height);
-im.show(); 
+//im.width = ctx.measureText(text).width;
+//im.height = height; 
+//ctx.font = height + 'px Helvetica bold'; 
+//ctx.fillStyle = "blue"; 
+//ctx.fillText(text, 0, height);
+//im.show(); 
 
-var imageData = ctx.getImageData(0, 0, im.width, im.height).data; 
-var pixels = []; 
-var arrayData = []; 
-var numPixels = im.width*im.height; 
-var step = 1; 
-for (var j=0; j<im.height; j+=step){
-var row = []; 
-for (var i=0; i<im.width; i+=step){
-var dataIndex = 4*(i + im.width*j); 
-var r = imageData[dataIndex], g = imageData[dataIndex + 1], b = imageData[dataIndex +2], a = imageData[dataIndex + 3], rgba = [r, g, b, a];
-var intensity = 10*(1 - (r + g + b)/(255*3)); 
-var pixel = {'className': 'pixel3d', 'coord': [i, im.height - j, intensity], 'size': 1.5*step, 'rgba': rgba}; 
-pixels.push(pixel);
-row.push([i, im.height - j, intensity]); 
-}
-arrayData.push(row); 
-}
-var arrayDataJSON = JSON.stringify(arrayData); 
-data.value = arrayDataJSON; 
-return pixels; 
+//var imageData = ctx.getImageData(0, 0, im.width, im.height).data; 
+//var pixels = []; 
+//var arrayData = []; 
+//var numPixels = im.width*im.height; 
+//var step = 1; 
+//for (var j=0; j<im.height; j+=step){
+//var row = []; 
+//for (var i=0; i<im.width; i+=step){
+//var dataIndex = 4*(i + im.width*j); 
+//var r = imageData[dataIndex], g = imageData[dataIndex + 1], b = imageData[dataIndex +2], a = imageData[dataIndex + 3], rgba = [r, g, b, a];
+//var intensity = 10*(1 - (r + g + b)/(255*3)); 
+//var pixel = {'className': 'pixel3d', 'coord': [i, im.height - j, intensity], 'size': 1.5*step, 'rgba': rgba}; 
+//pixels.push(pixel);
+//row.push([i, im.height - j, intensity]); 
+//}
+//arrayData.push(row); 
+//}
+//var arrayDataJSON = JSON.stringify(arrayData); 
+//data.value = arrayDataJSON; 
+//return pixels; 
 
-}catch(e){alert(e)}
-}
+//}catch(e){alert(e)}
+//}
 
-var pixels = image3d(); 
+//var pixels = image3d(); 
 //alert(JSON.stringify(pixels)); 
 
 //scene = scene.concat(pixels); 
